@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t genta639/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run genta639/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t genta639/multi-client ./client
+  - docker build -t genta639/multi-nginx ./nginx
+  - docker build -t genta639/multi-server ./server
+  - docker build -t genta639/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin  
+  # Take those images and push them to docker hub
+  - docker push genta639/multi-client
+  - docker push genta639/multi-nginx
+  - docker push genta639/multi-server
+  - dokcer push genta639/multi-worker
