@@ -21,14 +21,14 @@ after_success:
   - docker push genta639/multi-server
   - dokcer push genta639/multi-worker
 
-  deploy:
-    provider: elasticbeanstalk 
-    region: ap-northeast-1
-    app: multi-docker
-    bucket_name: elasticbeanstalk-ap-northeast-1-211662250791
-    bucket_path: docker-multi
-    on:
-      branch: master
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key:
-      secure: $AWS_SECRET_KEY
+deploy:
+  provider: elasticbeanstalk 
+  region: ap-northeast-1
+  app: multi-docker
+  bucket_name: elasticbeanstalk-ap-northeast-1-211662250791
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
